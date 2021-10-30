@@ -54,6 +54,16 @@ async function run() {
 
             })
 
+            //Add Packages
+
+            app.post('/addpackage', async (req, res) => {
+                  const package = req.body
+                  console.log(package);
+                  const result = await travelCollection.insertOne(package)
+                  console.log(result);
+                  res.json(result)
+            })
+
             //All orders
 
             app.get('/allbooking', async (req, res) => {
