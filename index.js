@@ -54,11 +54,16 @@ async function run() {
 
             })
 
+            //All orders
+
             app.get('/allbooking', async (req, res) => {
                   const cursor = bookedUserCollection.find({})
                   const result = await cursor.toArray()
                   res.send(result)
             })
+
+            //delete order
+
             app.delete('/allbooking/:id', async (req, res) => {
                   const id = req.params.id
                   const query = { _id: ObjectId(id) }
@@ -67,6 +72,30 @@ async function run() {
                   console.log(result);
                   res.json(result)
             })
+
+            //my Orders
+
+            app.get('/mybooking/:id', async (req, res) => {
+                  const id = req.params.id;
+                  console.log(id);
+                  const query = {
+                        email: id
+                  }
+                  console.log(query);
+                  const cursor = bookedUserCollection.find(query)
+                  const result = await cursor.toArray()
+                  res.send(result)
+            })
+            app.delete('/mybooking/:id', async (req, res) => {
+                  const id = req.params.id
+                  const query = { _id: ObjectId(id) }
+
+                  const result = await bookedUserCollection.deleteOne(query)
+                  console.log(result);
+                  res.json(result)
+            })
+
+
 
       }
       finally {
